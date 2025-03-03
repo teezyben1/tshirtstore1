@@ -1,0 +1,48 @@
+openapi: "3.0.0"
+info:
+  title: "tshirt store"
+  description: "Api for tshirt store"
+  version: "1.1.0"
+  contact:
+    email: "ezebenjaminch@gmail.com"
+
+servers:
+- url: "http://localhost:5000/api/{version}"
+  description: "Local server"
+  variables:
+    version:
+      enum:
+      - v1
+      - v2
+      default: v1
+
+components:
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: token
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+paths:
+  /:
+    get:
+      summary: returns a greet message
+      responses:
+        200:
+          description: All good success
+          content:
+            application/json:
+              schema:
+                type: string
+                example: "my string"
+        404:
+          description: All not successful
+          content:
+            application/json:
+              schema:
+                type: string
+                example: "Not successful"
