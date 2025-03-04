@@ -3,9 +3,18 @@ const router = express.Router()
 
 
 // Importing the controller
-const {home} = require('../controllers/user_controller')
+const {signup} = require('../controllers/user_controller')
 
 // Routes
-router.get('/', home)
+router.post('/signup', signup)
+
+
+
+
+
+
+
+
+
 
 module.exports = router;

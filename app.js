@@ -4,7 +4,7 @@ const app = express();
 const morgan = require('morgan');
 const fileUpload = require('express-fileupload');
 const cookieParser = require('cookie-parser');
-const routes = require('./routes/user_route');
+
 
 
 // for swagger documentation
@@ -13,16 +13,27 @@ const YAML = require('yamljs')
 const swaggerDocument = YAML.load('./swagger.yaml')
 app.use('/api-docs',swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 
-
+app.set('view engine', 'ejs');
 // Middleware
 app.use(morgan('tiny'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(fileUpload({
-    useTempFiles: true
+    useTempFiles: true,
+    tempFileDir: "/tmp/"
 }));
-app.use('/api/v1', routes);
+
+// Importing all routes
+const user = require('./routes/user_route');
+const { signup } = require('./controllers/user_controller');
+
+
+// Routes Middleware
+app.use('/api/v1', user);
+app.get('/signup',(req,res)=>{
+    res.render("signup")
+})
 
 
 // Routes
