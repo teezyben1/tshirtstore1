@@ -11,7 +11,7 @@ const cookieToken = (user, res) =>{
         user.password = undefined
         // send user in cookies and json
         res.status(201).cookie('token', token, options).json({
-            message: "user successfully create",
+            message: "success",
             token,
             user
         })

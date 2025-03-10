@@ -75,10 +75,10 @@ userSchema.methods.getJwtToken = function() {
 // generate password reset token
 userSchema.methods.getResetPasswordToken = function() {
     // generate token
-    const resetToken = crypto.randomBytes(20).toString('hex');
+    const resetToken = String(Math.floor(Math.random()*10000)).padStart(4,"0")
 
     // hash and set to resetPasswordToken
-    this.forgotPasswordToken = crypto.createHash('sha256').update(resetToken).digest('hex');
+    this.forgotPasswordToken = resetToken;
 
     // set token expire time
     this.forgotPasswordExpire = Date.now() + 20 * 60 * 1000;

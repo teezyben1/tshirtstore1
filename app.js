@@ -28,11 +28,9 @@ app.use(fileUpload({
 const user = require('./routes/user_route');
 const { signup } = require('./controllers/user_controller');
 
-
 // Routes Middleware
 app.use('/api/v1', user);
-app.get('/signup',(req,res)=>{
-    res.render("signup")
+app.get('/signup',(req,res)=>{res.render("signup")
 })
 
 
