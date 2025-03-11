@@ -39,9 +39,8 @@ const userSchema = new mongoose.Schema({
             default: "none"
             }
     },
-    forgotPasswordToken: String,
-
-    forgotPasswordExpire: Date,
+    otp:{type: String,},
+    otpExpiry:{type: Date},
 
     createdAt: {
         type: Date,
@@ -77,11 +76,9 @@ userSchema.methods.getResetPasswordToken = function() {
     // generate token
     const resetToken = String(Math.floor(Math.random()*10000)).padStart(4,"0")
 
-    // hash and set to resetPasswordToken
-    this.forgotPasswordToken = resetToken;
 
     // set token expire time
-    this.forgotPasswordExpire = Date.now() + 20 * 60 * 1000;
+    this.otpExpiry = Date.now() + 10 * 60 * 1000;
 
     return resetToken;
 }

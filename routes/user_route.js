@@ -12,10 +12,9 @@ const {signup, login, logout, forgotPassword,userProfile,
 router.post('/signup', signup);
 router.post('/login', login);
 router.get('/logout', logout)
+
 // /TODO reset password
-// /TODO update password
-// /TODO update user details
-// /TODO get user details
+
 router.post('/forgotpassword', forgotPassword)
 router.get('/user/profile',isLoggedIn, userProfile)
 router.post("/updatepassword", isLoggedIn, upDatePassword)
