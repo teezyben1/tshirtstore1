@@ -26,10 +26,16 @@ app.use(fileUpload({
 
 // Importing all routes
 const user = require('./routes/user_route');
+const product = require('./routes/product_route')
+const payment = require('./routes/payment_routes')
+const order = require('./routes/order_route')
 const { signup } = require('./controllers/user_controller');
 
 // Routes Middleware
 app.use('/api/v1', user);
+app.use('/api/v1',product);
+app.use("/api/v1",payment)
+app.use('/api/v1', order)
 app.get('/signup',(req,res)=>{res.render("signup")
 })
 

@@ -193,19 +193,24 @@ exports.upDatePassword = async(req, res, next) => {
 
 exports.updateUser = async(req, res, next) => {
     try {
-        // todo check the req.body
+        const userId = req.params.id
+        const file = req.files.photo
+        const user = await User.findById(userId)
+        
+        const imageId = user.profile_img.public_id;
 
         const newData = {
             name: req.body.name,
             email: req.body.email
         }
 
-        if (req.files){
-            const file = req.files.photo
-            const user = await User.findById(userId)
-            
-            const imageId = user.profile_img.public_id;
-
+        if (!req.files){
+            const user = await User.findByIdAndUpdate(userId, newData,{returnDocument:'after'})
+            res.status(200).json({
+                success: true,
+                data: user
+            })
+        }
             // delete photo on cloudinary
             const respond = await cloudinary.uploader.destroy(imageId)
 
@@ -219,7 +224,6 @@ exports.updateUser = async(req, res, next) => {
             newData.profile_img = {
                 public_id: newPhoto.public_id,
                 url: newPhoto.secure_url
-
             }
 
             const upDateduser = await User.findByIdAndUpdate(userId, newData, {returnDocument:'after'})
@@ -228,18 +232,8 @@ exports.updateUser = async(req, res, next) => {
                 data: upDateduser
             })
             
-        }else{
-
-            const user = await User.findByIdAndUpdate(userId, newData,{returnDocument:'after'})
-            res.status(200).json({
-                success: true,
-                data: user
-            })
-        }
-        
     } catch (error) {
         next(error)
-        
     }
 }
 
